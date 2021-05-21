@@ -4,9 +4,9 @@ const stdlib = await loadStdlib();
 const startingBalance = stdlib.parseCurrency(0);
 
 // votes
-participant(Voter0, participantInteractInterface, Boolean)
-participant(Voter1, participantInteractInterface, Boolean)
-participant(Voter2, participantInteractInterface, Boolean)
+participant(Voter0, participantInteractInterface, Bool)
+participant(Voter1, participantInteractInterface, Bool)
+participant(Voter2, participantInteractInterface, Bool)
 
 // count votes
 function vote {
