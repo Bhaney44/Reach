@@ -1,0 +1,38 @@
+(node:25) ExperimentalWarning: The ESM module loader is experimental.
+Begin demo with funder delay(0) and receiver delay(0).
+Receiver sees that the account is funded.
+Funder sees that the account is funded.
+Bystander sees that the account is funded.
+Receiver is ready to receive the funds.
+Receiver received the funds.
+Funder has a balance of 89.9999
+Receiver has a balance of 109.9999
+Bystander has a balance of 100
+
+
+Begin demo with funder delay(0) and receiver delay(21).
+Funder sees that the account is funded.
+Bystander sees that the account is funded.
+Receiver sees that the account is funded.
+Receiver begins to wait...
+Funder is ready to receive the funds.
+Receiver is ready to receive the funds.
+Funder received the funds.
+Funder has a balance of 99.9999
+Receiver has a balance of 99.9999
+Bystander has a balance of 100
+
+
+Begin demo with funder delay(31) and receiver delay(21).
+Funder sees that the account is funded.
+Funder begins to wait...
+Receiver sees that the account is funded.
+Receiver begins to wait...
+Bystander sees that the account is funded.
+Receiver is ready to receive the funds.
+Bystander is ready to receive the funds.
+Funder is ready to receive the funds.
+Bystander received the funds.
+Funder has a balance of 89.9999
+Receiver has a balance of 100
+Bystander has a balance of 109.9999
