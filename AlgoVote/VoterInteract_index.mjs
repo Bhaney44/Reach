@@ -3,20 +3,24 @@ import { loadStdlib } from '@reach-sh/stdlib';
 import * as backend from './build/index.main.mjs';
 import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
 
+
+//function
 (async () => {
   const stdlib = await loadStdlib();
 
   /// Vote Yes/No
+  //variable
   const isAlice = await ask(
     `Vote yes or no`,
     yesno
   );
   
   /// voter 1
-  const who = isAlice ? 'Alice' : 'Bob';
+  //variable
+  const who = isAlice ? 'Voter 0' : 'Voter 1';
+  console.log(`Starting Vote ${who}`);
 
-  console.log(`Starting Rock, Paper, Scissors! as ${who}`);
-
+  // let account equal null
   let acc = null;
 
   /// confirmation / question two
@@ -24,7 +28,8 @@ import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
     `Confirm yes or no`,
     yesno
   );
-
+  
+  /// create new account
   if (createAcc) {
     acc = await stdlib.newTestAccount(stdlib.parseCurrency(1000));
   } else {
@@ -40,6 +45,8 @@ import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
     `Execute`,
     yesno
   );
+
+  // if statement
   if (deployCtc) {
     ctc = acc.deploy(backend);
     const info = await ctc.getInfo();
@@ -52,6 +59,7 @@ import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
     ctc = acc.attach(backend, info);
   }
 
+  // variables
   const fmt = (x) => stdlib.formatCurrency(x, 4);
   const getBalance = async () => fmt(await stdlib.balanceOf(acc));
 
@@ -59,8 +67,10 @@ import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
   const before = await getBalance();
   console.log(`Your balance is ${before}`);
 
+  // constant
   const interact = { ...stdlib.hasRandom };
 
+  // inform
   interact.informTimeout = () => {
     console.log(`There was a timeout.`);
     process.exit(1);
@@ -98,7 +108,9 @@ import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
   /// get hand
   interact.getHand = async () => {
     const hand = await ask(`What hand will you play?`, (x) => {
+      /// variable
       const hand = HANDS[x];
+      /// if
       if ( hand == null ) {
         throw Error(`Not a valid hand ${hand}`);
       }
@@ -114,6 +126,7 @@ import { ask, yesno, done } from '@reach-sh/stdlib/ask.mjs';
     console.log(`The outcome is: ${OUTCOME[outcome]}`);
   };
 
+  // constant
   const part = isAlice ? backend.Alice : backend.Bob;
   await part(ctc, interact);
 
