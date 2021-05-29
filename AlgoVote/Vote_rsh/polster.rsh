@@ -16,9 +16,13 @@ const Common = {
 export const main =
   Reach.App(() => {
 
+    // Options - ETH OR ALGO
     setOptions({ connectors: [ETH, ALGO ]});
 
     // Pollster
+    // Constant
+    // Participant
+    // parameters - object: ticketpice, deadline, alice address, bob address
     const Pollster =
       Participant('Pollster', { ...Common,
         getParams: Fun([], Object({
@@ -29,6 +33,9 @@ export const main =
       });
 
     // Voter
+    // getVot, voterWas
+    // shouldVote
+
     const Voter =
       ParticipantClass('Voter',
       { ...Common,
@@ -44,10 +51,17 @@ export const main =
       each([Pollster, Voter], () =>
         interact.showOutcome(which, forA, forB)); };
 
+    // Pollster 
+    // ticketprice, deadline, alice Address, bob address
+
     Pollster.only(() => {
       const { ticketPrice, deadline, aliceAddr, bobAddr } =
         declassify(interact.getParams());
     });
+
+    // Pollster
+    // Publishticketprice, deadline, alice Address, bob address
+    
     Pollster.publish(ticketPrice, deadline, aliceAddr, bobAddr);
     const [ timeRemaining, keepGoing ] = makeDeadline(deadline);
 
@@ -77,6 +91,8 @@ export const main =
     const winner = outcome == ALICE_WINS ? aliceAddr : bobAddr;
     transfer(balance()).to(winner);
     commit();
+
+    // Show outcome
     showOutcome(outcome, forA, forB)();
 
   });
