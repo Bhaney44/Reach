@@ -1,28 +1,37 @@
+/////////////////////////////////////////////////////
 // Copyright Brian Haney 2021
 // MIT License
 // reach
+/////////////////////////////////////////////////////
 'reach 0.1';
 'use strict';
 
 //Constants
-
+/////////////////////////////////////////////////////
 const [ _, ALICE_WINS, BOB_WINS, TIMEOUT ] = makeEnum(3);
 
+//Common
+/////////////////////////////////////////////////////
 const Common = {
   showOutcome: Fun([UInt, UInt, UInt], Null),
 };
 
+/////////////////////////////////////////////////////
 // main
+// Reach App
+/////////////////////////////////////////////////////
 export const main =
   Reach.App(() => {
 
     // Options - ETH OR ALGO
+    /////////////////////////////////////////////////////
     setOptions({ connectors: [ETH, ALGO ]});
 
     // Pollster
     // Constant
     // Participant
     // parameters - object: ticketpice, deadline, alice address, bob address
+    /////////////////////////////////////////////////////
     const Pollster =
       Participant('Pollster', { ...Common,
         getParams: Fun([], Object({
@@ -35,7 +44,7 @@ export const main =
     // Voter
     // getVot, voterWas
     // shouldVote
-
+    /////////////////////////////////////////////////////
     const Voter =
       ParticipantClass('Voter',
       { ...Common,
@@ -43,17 +52,17 @@ export const main =
         voterWas: Fun([Address], Null),
         shouldVote: Fun([], Bool),
       });
-
     deploy();
 
     // Outcome
+    /////////////////////////////////////////////////////
     const showOutcome = (which, forA, forB) => () => {
       each([Pollster, Voter], () =>
         interact.showOutcome(which, forA, forB)); };
 
     // Pollster 
     // ticketprice, deadline, alice Address, bob address
-
+    /////////////////////////////////////////////////////
     Pollster.only(() => {
       const { ticketPrice, deadline, aliceAddr, bobAddr } =
         declassify(interact.getParams());
@@ -61,11 +70,16 @@ export const main =
 
     // Pollster
     // Publishticketprice, deadline, alice Address, bob address
-    
+    /////////////////////////////////////////////////////
     Pollster.publish(ticketPrice, deadline, aliceAddr, bobAddr);
     const [ timeRemaining, keepGoing ] = makeDeadline(deadline);
 
     // Constant
+    // Complex function
+    // parallel reduction
+    // .word(syntax) is unclear
+    // Outcome not clear
+    /////////////////////////////////////////////////////
     const [ forA, forB ] =
       parallelReduce([ 0, 0])
       .invariant(balance() == (forA + forB) * ticketPrice)
@@ -86,13 +100,17 @@ export const main =
         return [ forA, forB ]; });
 
     // Outcome
+    /////////////////////////////////////////////////////
     const outcome = forA >= forB ? ALICE_WINS : BOB_WINS;
+
     // Winner
+    /////////////////////////////////////////////////////
     const winner = outcome == ALICE_WINS ? aliceAddr : bobAddr;
     transfer(balance()).to(winner);
     commit();
 
     // Show outcome
+    /////////////////////////////////////////////////////
     showOutcome(outcome, forA, forB)();
 
   });
