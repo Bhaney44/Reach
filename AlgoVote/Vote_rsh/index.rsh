@@ -13,18 +13,20 @@
 ////////////////////////////////////////////////////////////////////////
 
 // Reach
+////////////////////////////////////////////////////////////////////////
 'reach 0.1';
 
 // Introduction
 // Instance of the game
 // isHand -> isVote
+////////////////////////////////////////////////////////////////////////
 const [ isVote, No, Indifferent, Yes ] = makeEnum(3);
 
 // outcome
 // Return_0 - Alice gets 0
 // Return_NULL - Return_NULL
 // Return_1 - Alice gets 1
-
+////////////////////////////////////////////////////////////////////////
 const [ isOutcome, Return_0, Return_NULL, Return_1 ] = makeEnum(3);
 
 ////////////////////////////////////////////////////////////////////////
@@ -36,20 +38,24 @@ const [ isOutcome, Return_0, Return_NULL, Return_1 ] = makeEnum(3);
 ////////////////////////////////////////////////////////////////////////
 
 // Winner
+////////////////////////////////////////////////////////////////////////
 const winner = (VoteA, VoteB, VoteC) =>
       ((VoteA + VoteB + VoteC)/3);
 
 // instances of results
+////////////////////////////////////////////////////////////////////////
 assert(winner(No, Indifferent) == Return_0);
 assert(winner(Indifferent, No) == Return_1);
 assert(winner(No, No) == Return_NULL);
 
 // function to determine outcome
+////////////////////////////////////////////////////////////////////////
 forall(UInt, VoteA =>
   forall(UInt, VoteB =>
     assert(isOutcome(winner(VoteA, VoteB)))));
 
 // function to determine outcome
+////////////////////////////////////////////////////////////////////////
 forall(UInt, (hand) =>
   assert(winner(hand, hand) == Return_NULL));
 
@@ -168,6 +174,7 @@ export const main =
         outcome = winner(VoteA, VoteB);
         continue; }
 
+      // assert outcome
       assert(outcome == Return_1 || outcome == Return_0);
       transfer(2 * stake).to(outcome == Return_1 ? A : B);
       commit();
