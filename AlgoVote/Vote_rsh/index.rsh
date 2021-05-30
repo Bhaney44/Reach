@@ -71,11 +71,13 @@ const Voter =
         informTimeout: Fun([], Null) };
 
 // call voter object Alice
+////////////////////////////////////////////////////////////////////////
 const Alice =
       { ...Voter,
         stake: UInt };
 
 // call voter object Cris
+////////////////////////////////////////////////////////////////////////
 const Cris =
       { ...Voter,
         stake: UInt };
@@ -83,17 +85,20 @@ const Cris =
 // call voter object Bob
 // Bob accepts - Bob may also stake
 // Consider adding a voting attribute
+////////////////////////////////////////////////////////////////////////
 const Bob =
       { ...Voter,
         acceptstake: Fun([UInt], Null) };
 
 // call voter object Cris
 // Add third participant
+////////////////////////////////////////////////////////////////////////
 const Cris =
       { ...Voter,
         acceptstake: Fun([UInt], Null) };
 
 // Deadline
+////////////////////////////////////////////////////////////////////////
 const DEADLINE = 10;
 
 ////////////////////////////////////////////////////////////////////////
@@ -119,18 +124,23 @@ export const main =
       // Alice, Cris, Bob Accepts (may stake)
       ////////////////////////////////////////////////////////////////////////
       // Alice stake
+      ////////////////////////////////////////////////////////////////////////
       A.only(() => {
         const stake = declassify(interact.stake); });
       A.publish(stake)
         .pay(stake);
       commit();
+      ////////////////////////////////////////////////////////////////////////
       // Cris stake
+      ////////////////////////////////////////////////////////////////////////
       C.only(() => {
         const stake = declassify(interact.stake); });
       C.publish(stake)
         .pay(stake);
       commit();
+      ////////////////////////////////////////////////////////////////////////
       // Bob validates stake
+      ////////////////////////////////////////////////////////////////////////
       B.only(() => {
         interact.acceptstake(stake); });
       B.pay(stake)
@@ -138,10 +148,12 @@ export const main =
 
       ////////////////////////////////////////////////////////////////////////
       // Outcome
-      ////////////////////////////////////////////////////////////////////////
       // outcome - return_null
+      ////////////////////////////////////////////////////////////////////////
       var outcome = Return_NULL;
+
       // balance
+      ////////////////////////////////////////////////////////////////////////
       invariant(balance() == 2 * stake && isOutcome(outcome) );
 
       ////////////////////////////////////////////////////////////////////////
@@ -150,6 +162,8 @@ export const main =
       while ( outcome == Return_NULL ) {
         commit();
 
+        // Alice publish
+        ////////////////////////////////////////////////////////////////////////
         A.only(() => {
           const _VoteA = interact.getVote();
           const [_commitA, _saltA] = makeCommitment(interact, _VoteA);
@@ -158,6 +172,8 @@ export const main =
           .timeout(DEADLINE, () => closeTo(B, informTimeout));
         commit();
 
+        // Bob publish
+        ////////////////////////////////////////////////////////////////////////
         unknowable(B, A(_VoteA, _saltA));
         B.only(() => {
           const VoteB = declassify(interact.getVote()); });
@@ -165,12 +181,16 @@ export const main =
           .timeout(DEADLINE, () => closeTo(A, informTimeout));
         commit();
 
+        // Alice Publish
+        ////////////////////////////////////////////////////////////////////////
         A.only(() => {
           const [saltA, VoteA] = declassify([_saltA, _VoteA]); });
         A.publish(saltA, VoteA)
           .timeout(DEADLINE, () => closeTo(B, informTimeout));
         checkCommitment(commitA, saltA, VoteA);
 
+        // Outcome
+        ////////////////////////////////////////////////////////////////////////
         outcome = winner(VoteA, VoteB);
         continue; }
 
@@ -179,6 +199,11 @@ export const main =
       transfer(2 * stake).to(outcome == Return_1 ? A : B);
       commit();
 
+      // each function
+      ///////////////////////////////////////////////////////////////////////
       each([A, B], () => {
         interact.seeOutcome(outcome); });
+
+      // exit
+      ///////////////////////////////////////////////////////////////////////
       exit(); });
