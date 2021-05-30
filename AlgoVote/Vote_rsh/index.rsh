@@ -2,9 +2,19 @@
 // Copyright Brian Haney and Archie Chaudhury 2021
 // MIT License
 ////////////////////////////////////////////////////////////////////////
-// Syntax Lib
-// const - constant variable
-// Participants - class
+// Javascript Syntax Library
+
+//// const
+// constant variable
+// Constants are blocks similar variables declared using the let keyword. 
+// The value of a constant can't be changed through reassignment, and it can't be redeclared.
+// const id = (x) => x; is the identity function
+// const add1 = (x) => x + 1; is adds one
+// (arguments) => body
+
+//// .only
+// Method which returns a new list that contains only those elements matching the given selector.
+
 ////////////////////////////////////////////////////////////////////////
 // Parameters
 // 3 participants
