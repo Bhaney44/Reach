@@ -14,7 +14,7 @@ import * as backend from './build/index.main.mjs';
   const HAND = ['Yes', 'Yes', 'No'];
   const OUTCOME = ['Bob gets 1.00 Algo', 'Bob gets 1.00 Algo', 'Bob gets 0.00 Algo'];
   const Player = (Who) => ({
-    getHand: () => {
+    getVote: () => {
       const hand = Math.floor(Math.random() * 3);
       console.log(`${Who} voted ${HAND[hand]}`);
       return hand;
