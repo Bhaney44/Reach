@@ -26,6 +26,8 @@ import * as backend from './build/index.main.mjs';
       return hand;
     },
     // See outcome method
+    // the console.log is indexing the array OUTCOME with the value of outcome.
+    // rather, the string interpolation which is passed to console.log is doing that.
     seeOutcome: (outcome) => {
       console.log(`${Who} saw outcome ${OUTCOME[outcome]}`);
     },
