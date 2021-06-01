@@ -10,6 +10,8 @@ const Player =
       { getVote: Fun([], UInt),
         seeOutcome: Fun([UInt], Null) };
 
+
+
 export const main =
   Reach.App(
     {},
@@ -28,18 +30,8 @@ export const main =
       B.publish(handB);
 
       // computes the outcome of the game before committing. 
-
-      //try
-      // const total = handA + handB;
-      // const outcome = total / 2
-      // /////////////////////////////
       const outcome = (handA + (4 - handB)) % 3;
       commit();
-
-      // An each local step statement can be written as each(PART_TUPLE () => BLOCK), 
-      // where PART_TUPLE is a tuple of participants and BLOCK is a block. 
-      // It is an abbreviation of many local step statements that could have been written with only.
-      // interact.seeOutcome(outcome) invokes the seeOutcome method
 
       each([A, B], () => {
         interact.seeOutcome(outcome); });

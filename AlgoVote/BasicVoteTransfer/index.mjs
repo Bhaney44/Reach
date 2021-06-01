@@ -15,7 +15,7 @@ import * as backend from './build/index.main.mjs';
 
   // define arrays to hold the meaning of the hands and outcomes.
   const HAND = ['Yes', 'Yes', 'No'];
-  const OUTCOME = ['Bob gets 5.00 Algo', 'Bob gets 5.00 Algo', 'Bob gets 0.00 Algo'];
+  const OUTCOME = ['Voter 2 gets 5.00 Algo', 'Voter 2 gets 5.00 Algo', 'Voter 2 gets 0.00 Algo'];
 
   // defines a constructor for the Player implementation.
   const Player = (Who) => ({
@@ -26,8 +26,6 @@ import * as backend from './build/index.main.mjs';
       return hand;
     },
     // See outcome method
-    // the console.log is indexing the array OUTCOME with the value of outcome.
-    // rather, the string interpolation which is passed to console.log is doing that.
     seeOutcome: (outcome) => {
       console.log(`${Who} saw outcome ${OUTCOME[outcome]}`);
     },
@@ -37,11 +35,11 @@ import * as backend from './build/index.main.mjs';
   await Promise.all([
     backend.Alice(
       ctcAlice,
-      Player('Alice'),
+      Player('Voter 0'),
     ),
     backend.Bob(
       ctcBob,
-      Player('Bob'),
+      Player('Voter 1'),
     ),
   ]);
 })();
