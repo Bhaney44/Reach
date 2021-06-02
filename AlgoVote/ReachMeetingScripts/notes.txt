@@ -1,0 +1,38 @@
+
+// UInt
+// take integer - unsigned integer
+const Player =
+      { ...hasRandom,
+        getHand: Fun([], UInt),
+        seeOutcome: Fun([UInt], Null);
+        
+export const main =
+  Reach.App(
+    {},
+    [Participant('Alice', Alice), Participant('Bob', Bob)],
+    (A, B) => {
+      const informTimeout = () => {
+        each([A, B], () => {
+          interact.informTimeout(); }); };
+
+    // go to alice and do something
+    // function 
+      A.only(() => {
+        const wager = declassify(interact.wager); });
+      A.publish(wager)
+        .pay(wager);
+      commit();
+
+    // function syntax
+      () => {
+
+      }
+    
+    // call getHand
+    // interact.getHand()
+
+    const Player =
+      {getVote: Fun([], UInt)};
+    
+    Alice.only()=> {
+        const vote.Alice = declassify(interact.getVote())}
