@@ -1,5 +1,5 @@
 # Reach
-This repository contains files in the Reach Language. The repository is being developed to complete the Reach Tutorial as part of the Universities Unchained Hackathon.
+This repository contains files in the Reach Language. 
 
 Link to docs: https://docs.reach.sh/
 Link to JavaScript reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
